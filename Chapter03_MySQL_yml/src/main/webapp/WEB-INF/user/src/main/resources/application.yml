@@ -1,0 +1,40 @@
+# server port
+server:
+  port: 8080
+
+# JSP
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/  
+      suffix: .jsp
+      
+  # MySQL
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+    
+# MyBatis
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  type-aliases-package: user.bean
+  mapper-locations: classpath:mapper/**/*.xml
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;user.controller&apos; to &apos;Chapter05_JPA/src/main/java&apos;&#x0D;&#x0A;- Original project: &apos;Chapter04_JPA&apos;&#x0D;&#x0A;- Destination element: &apos;Chapter05_JPA/src/main/java&apos;&#x0D;&#x0A;- Original element: &apos;Chapter04_JPA/src/main/java/user.controller&apos;" description="Copy package" destination="=Chapter05_JPA/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;user.controller" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1658196321110" version="1.0"/>
+</session>

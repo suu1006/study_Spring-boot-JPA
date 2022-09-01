@@ -1,0 +1,7 @@
+package com.springboot.main;
+
+public interface BoardService {
+
+	public void write();
+
+}

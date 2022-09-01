@@ -1,0 +1,119 @@
+package user.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import user.bean.UserDTO;
+import user.dao.UserDAO;
+
+@Service
+public class UserServiceImpl implements UserService {
+	@Autowired
+	private UserDAO userDAO = null;
+//	@Autowired
+//	private UserPaging userPaging;
+
+	@Override
+	public void write(UserDTO userDTO) {
+		//id를 primary key로 설정를 했기 때문에 
+		//똑같은 id가 없으면 insert가 수행이 되고, 있으면 update가 수행이 된다.
+		userDAO.save(userDTO);
+	}
+
+	@Override
+	public String checkId(String id) {
+		Optional<UserDTO> userDTO = userDAO.findById(id);
+		System.out.println(userDTO); //id가 없으면 Optional.empty라 출력이 된다.
+		
+		if(userDTO.isPresent()) //값이 없으면 false
+			return "exist"; //사용 불가능
+		else
+			return "non_exist"; //사용 가능
+	}
+	
+	
+	@Override
+	public Map<String, Object> getUserList(String pg) {
+		//1페이지당 5개씩
+		int endNum = Integer.parseInt(pg) * 5;
+		int startNum = endNum - 5;
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		
+		List<UserDTO> list = userDAO.findAll();
+		
+		//페이징처리
+//		int totalA = userDAO.getTotalA(); //총글수
+	
+//		userPaging.setCurrentPage(Integer.parseInt(pg));
+//		userPaging.setPageBlock(3);
+//		userPaging.setPageSize(5);
+//		userPaging.setTotalA(totalA);
+//		userPaging.makePagingHTML();
+		
+		Map<String, Object> sendMap = new HashMap<String, Object>();
+		sendMap.put("list", list);
+//		sendMap.put("userPaging", userPaging);
+		return sendMap;
+	}
+	
+	@Override
+	public Optional<UserDTO> getUser(String id) {
+		return userDAO.findById(id);
+	}
+
+	@Override
+	public void update(UserDTO userDTO) {
+		userDAO.save(userDTO);
+	}
+
+	@Override
+	public void delete(String id) {
+		//deleteById()는 내부적으로 findById()를 수행하고 delete를 수행한다.
+		//만약 없으면 EmptyResultDataAccessException을 발생한다.
+		userDAO.deleteById(id);
+	}
+
+	/*
+	@Override
+	public List<UserDTO> getUserSearchList(Map<String, String> map) {
+		return userDAO.getUserSearchList(map);
+	}
+	*/
+}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+ 
+
+
+
+
+
+
+
+
+
+
+
+

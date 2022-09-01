@@ -1,0 +1,27 @@
+package user.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import user.bean.UserDTO;
+
+@Repository
+public interface UserDAO extends JpaRepository<UserDTO, String>{
+
+
+	// 첫번째 방법 - 쿼리 메소드
+	/*
+	 * public List<UserDTO> findByNameContaining(String keyword);
+	 * 
+	 * public List<UserDTO> findByIdContaining(String keyword);
+	 */
+	
+	// 두번째 방법 - @Query 
+	@Query()
+	public List<UserDTO> getUserSearchName(String keyword);
+
+	public List<UserDTO> getUserSearchId(String keyword);
+
+}

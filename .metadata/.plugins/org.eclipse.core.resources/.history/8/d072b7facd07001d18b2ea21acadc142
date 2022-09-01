@@ -1,0 +1,29 @@
+package user.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import user.bean.UserDTO;
+
+@Repository
+public interface UserDAO extends JpaRepository<UserDTO, String>{
+
+
+	// 첫번째 방법 - 쿼리 메소드
+	/*
+	 * public List<UserDTO> findByNameContaining(String keyword);
+	 * 
+	 * public List<UserDTO> findByIdContaining(String keyword);
+	 */
+	
+	// 두번째 방법 - @Query 
+	// 테이블명이 오면 안된다. 엔티티 객체가 와야한다.
+	@Query("select userDTO from UserDTO where userDTO.name like concat('%', 홍, '%'") // 테이블과 결합되는게 아니라 Entity에 결합되는거여서 테이블명을 적어주면 안된다!! dto 객체와 결합이 된다. 
+	public List<UserDTO> getUserSearchName(String keyword);
+
+	public List<UserDTO> getUserSearchId(String keyword);
+
+}

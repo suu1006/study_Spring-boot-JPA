@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace = "userSQL">  <!-- xml파일끼리 이름이 충돌나지 않게 namespace를 걸어주자! -->
+	 	
+	 	<insert id = "write" parameterType = "user"> <!-- user.bean.UserDTO -풀쿼리 네임이 필요 / 타입 항상 써주기 -->
+	 		insert into usertable values(#{name},#{id},#{pwd}) 
+	 	</insert> <!-- ?를 못쓰니까 #을 쓴다.  -->
+	 		
+	 		
+	 	<select id = "checkId" parameterType = "String" resultType = "user">
+	 		select * from usertable where id = #{id} 
+	 	</select>
+	 	
+	 	
+	 	<delete id = "delete"  parameterType = "user.bean.UserDTO"> <!--  parameterType = "String" -->
+	 		delete from usertable where id = #{id} <!-- mysql에서는 from을 꼭 써야한다.-->
+	 	</delete> 
+	 	
+	 		<!-- < parameterType = "user.bean.UserDTO">
+	 		delete from usertable where id = #{id}
+	 		</insert> -->
+	 		
+	 	<resultMap type = "user" id = "userResult"> <!-- 컬럼명이랑 dto 필드명이 같지 않을때 만들어서 사용해주자(회사갔을때 안맞으면 사용해라)-->
+	 		<!-- <result property = "UserDTO의 필드" column = "테이블의 컬럼"/> -->
+	 		<result property = "name" column = "NAME"/>
+	 		<result property = "id" column = "ID"/>
+	 		<result property = "pwd" column = "PWD"/>
+	 	</resultMap>
+	 		
+	 	<!-- <select  id = "getUserList" resultType = "user.bean.UserDTO"> resultType은 기술해줘야함resultType 같은 이름찾아서 매핑해줌 -->
+	 	<select  id = "getUserList" resultMap = "userResult"> <!-- 내가 설정한 대로 짝을 맞춰라 -->
+	 		select * from usertable
+	 	</select>	
+	 	
+	 	<select  id ="getUser"  parameterType ="String" resultType = "user"><!-- java.lang이 기본이라서 String 만 적어줘도 된다. -->
+	 		select * from usertable where id = #{id}
+	 	
+	 	</select>
+	 	
+	 	<update  id ="update"  parameterType ="java.util.Map">
+	 		update usertable set name = #{name}, pwd= #{pwd} where id = #{id}
+	 	</update>
+	 	
+	 	 <select  id ="getUserSearchList" parameterType="java.util.Map" resultType="user"> 
+	 		
+	 		<!-- parameterType="java.util.Map" resultType="user.bean.UserDTO">
+	 		 -->
+	 		 
+	 		 
+	 	<!-- 1번째 방법 -if -->
+	 		<!-- XML의 문법을 따라갈게요 - if문 -->
+	 		
+	 		<!-- select from usertable where
+	 		
+		     <if test="columnName == 'name'">
+		    	 name like  '%'||#{value} ||'%'#{name}이 물음표 부분임 /  || 연결 연산자
+		     </if>
+		     
+		      <if test="columnName == 'id'">
+		   		 id  like  '%'||#{value} ||'%' #{name}이 물음표 부분임 /  || 연결 연산자
+		     </if> -->
+		     
+		<!-- 2번째 방법 - choose -->
+		  	 <!--   select from usertable where
+		     <choose>
+		     	<when test = "columnName == 'name'">
+		     		name like '%'#{value}||'%'
+		     	</when>
+		     	<otherwise>
+		     		id ike '%'#{value}||'%'
+		     	</otherwise>
+		     </choose>
+		      -->
+		     <!--  select * from usertable where #{columnName} like '%'||#{value}||'%'; -->
+		     
+		     <!-- Mysql -->
+		    <!--  select * from usertable where ${searchOption} like concat('%', #{keyword}, '%') -->
+		    
+		    select * from usertable where 
+		    <if test = "searchOption == 'name'">
+		    	name like concat ('%',#{keyword}, '%' )
+		    </if>
+		    <if test = "searchOption == 'id'">
+		    	id like concat ('%',#{keyword}, '%' )
+		    </if>
+	 	</select> 
+ </mapper>
+ 
+<!-- Oracle - 연결연산자(||)
+       - concat(인수, 인수) => 인수는 2개만 
+select * from usertable where ${searchOption} like '%' || #{keyword} || '%'
+
+MySQL - 연결연산자(||) 없다
+      - concat(인수, 인수) => 인수는 2개 이상 써도 된다 
+select * from usertable where ${searchOption} like concat('%', #{keyword}, '%') -->

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="userSQL">
+ 	<resultMap type="user" id="userResult">
+ 		<result property="name" column="NAME"/>
+ 		<result property="id" column="ID"/>
+ 		<result property="pwd" column="PWD"/>
+ 	</resultMap>
+ 	
+ 	<insert id="write" parameterType="user">
+ 		insert into usertable values(#{name}, #{id}, #{pwd})
+ 	</insert>
+ 	
+ 	<select id="checkId" parameterType="String" resultType="user">
+ 		select * from usertable where id=#{id}
+ 	</select>
+ 	
+ 	<delete id="delete" parameterType="String">
+ 		delete from usertable where id=#{id} <!-- MySQL에서는 from을 꼭 넣어야 한다. -->
+ 	</delete>
+ 	
+ 	<select id="getUserList" resultMap="userResult">
+ 		select * from usertable
+ 	</select>
+ 	
+ 	<select id="getUser" parameterType="String" resultType="user">
+ 		select * from usertable where id=#{id}
+ 	</select>
+ 	
+ 	<update id="update" parameterType="java.util.Map">
+ 		update usertable set name=#{name}, pwd=#{pwd} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="search" parameterType="java.util.Map" resultType="user">
+ 		<!-- XML => if -->
+ 		<!-- 
+ 		select * from usertable where
+ 		<if test="columnName == 'name'">
+ 			name like '%'||#{value}||'%'
+ 		</if>
+ 		<if test="columnName == 'id'">
+ 			id like '%'||#{value}||'%'
+ 		</if> -->
+ 		
+ 		<!-- XML => choose -->
+ 		<!-- 
+ 		select * from usertable where
+ 		<choose>
+ 			<when test="columnName == 'name'">
+ 				name like '%'||#{value}||'%'
+ 			</when>
+ 			<otherwise>
+ 				id like '%'||#{value}||'%'
+ 			</otherwise>
+ 		</choose> -->
+ 		
+ 		<!-- select * from usertable where ${columnName} like '%'||#{value}||'%' -->
+ 		
+ 		<!-- MySQL -->
+ 		<!-- select * from usertable where ${searchOption} like concat('%', #{keyword}, '%') -->
+ 		
+ 		select * from usertable where
+		<if test="searchOption == 'name'">
+			name like concat('%', #{keyword}, '%')
+		</if>
+		<if test="searchOption == 'id'">
+			id like concat('%', #{keyword}, '%')
+		</if>
+ 	</select>
+ </mapper>
+ 
+ <!-- 
+Oracle - 연결연산자(||)
+       - concat(인수, 인수) => 인수는 2개만 
+select * from usertable where ${searchOption} like '%' || #{keyword} || '%'
+
+MySQL - 연결연산자(||) 없다
+      - concat(인수, 인수) => 인수는 2개 이상 써도 된다 
+select * from usertable where ${searchOption} like concat('%', #{keyword}, '%')
+ -->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

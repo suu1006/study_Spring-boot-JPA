@@ -1,0 +1,18 @@
+package com.springboot.main;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class BoardController {
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@GetMapping(value = "/board/write")
+	public String write() {
+		boardService.write(); // db에 처리하고 돌아와~
+		return "게시물 등록 성공!"
+		
+	}
+}

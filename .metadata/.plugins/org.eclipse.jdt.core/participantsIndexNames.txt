@@ -1,0 +1,17 @@
+INDEX VERSION 1.131
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3076832509.index
+\Chapter05_JPA\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1256334113.index
+\Chapter02\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4197094877.index
+\Chapter05_JPA\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\84219084.index
+\Chapter03_MySQL_yml\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2355182129.index
+\Chapter02\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2932522699.index
+\Chapter03_MySQL_yml\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1610438852.index
+\Chapter03_MySQL_yml\src\main\java
+C:\Users\LG\Documents\workspace-spring-tool-suite-4-4.15.1.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1489157648.index
+\Chapter03_MySQL_yml\src\main\java

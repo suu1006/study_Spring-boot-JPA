@@ -1,0 +1,83 @@
+$(function(){
+	$.ajax({
+		type: 'post',
+		url: '/user/getUserList',
+		data: 'pg=' + $('#pg').val(),
+		dataType: 'json',
+		success: function(data){
+			//alert(JSON.stringify(data));
+			
+			$.each(data.list, function(index, items){
+				$('<tr/>').append($('<td/>', {
+					align: 'center',
+					text: items.name
+				})).append($('<td/>', {
+					align: 'center',
+					text: items.id
+				})).append($('<td/>', {
+					align: 'center',
+					text: items.pwd
+				})).appendTo($('#userListTable'));       
+			});//$.each
+			
+			//페이징처리
+			$('#userPagingDiv').html(data.userPaging.pagingHTML);
+			 
+		 },
+		 error: function(err){
+			 console.log(err);
+		 }
+	});
+});
+
+//검색
+$('#searchBtn').click(function(){
+	if($('#keyword').val() == '') 
+		alert('검색어를 입력하세요');
+	else
+		$.ajax({
+			type: 'post',
+			url: '/user/getUserSearchList',
+			data: $('#searchForm').serialize(), //pg, searchOption, keyword 
+			dataType: 'json', // 생략가능하다
+			success: function(data){
+				//alert(JSON.stringify(data));
+				
+				$('#userListTable tr:gt(0)').remove();
+				
+				$.each(data, function(index, items){
+					$('<tr/>').append($('<td/>', {
+						align: 'center',
+						text: items.name
+					})).append($('<td/>', {
+						align: 'center',
+						text: items.id
+					})).append($('<td/>', {
+						align: 'center',
+						text: items.pwd
+					})).appendTo($('#userListTable'));       
+				});//$.each
+			},
+			error: function(err){
+				console.log(err);
+		 	}
+		});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

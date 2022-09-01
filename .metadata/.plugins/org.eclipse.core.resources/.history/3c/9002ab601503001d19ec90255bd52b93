@@ -1,0 +1,18 @@
+package com.springboot.main;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Entity // mysql과 관계있게끔 설정됨
+@Table(name="board") // 이 설정을 하지 않으면 table이름이 boardDTO 로 되는데, table이름은board로 할것이라고 알려줘야함
+@Data
+public class BoardDTO { 
+	@Id // = 나는 기본키에요!(=primary key)
+	@Column(name="id", nullable=false, unique=true, length=30) // nullable = not null unique - 반복되지말아라 // id varchar(30) not null, unique >>sql문장으로 바뀜
+	private String id;
+	
+}

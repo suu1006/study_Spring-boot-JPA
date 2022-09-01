@@ -1,0 +1,35 @@
+package user.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import user.bean.UserDTO;
+
+@Repository
+public interface UserDAO extends JpaRepository<UserDTO, String>{
+
+
+	// 첫번째 방법 - 쿼리 메소드
+//	 public List<UserDTO> findByNameContaining(String keyword);
+//	 public List<UserDTO> findByIdContaining(String keyword);
+	
+	// 두번째 방법 - @Query 
+	// 테이블명이 오면 안된다. 엔티티 객체가 와야한다.// 테이블과 결합되는게 아니라 Entity에 결합되는거여서 테이블명을 적어주면 안된다!! dto 객체와 결합이 된다.
+	// 마이바티스와 결합하고 있으니까 이렇게 작성해줘야한다. 
+    // ?1은 첫번째 파라미터를 의미한다. (1번부터 시작)
+	@Query("select userDTO from UserDTO userDTO where userDTO.name like concat('%', ?1, '%'")  
+	public List<UserDTO> getUserSearchName(String keyword);
+
+	@Query("select userDTO from UserDTO userDTO where userDTO.id like concat('%' , ?1, '%')")
+	public List<UserDTO> getUserSearchId(String keyword);
+	
+//	@Query("select userDTO from UserDTO userDTO where userDTO.name like concat('%', :keyword, '%'") 
+//	public List<UserDTO> getUserSearchName(@Param("keyword") String keyword);
+//	
+//	@Query("select userDTO from UserDTO userDTO where userDTO.id like concat('%' , :keyword, '%')")
+//	public List<UserDTO> getUserSearchId(@Param("keyword") String keyword);
+}
